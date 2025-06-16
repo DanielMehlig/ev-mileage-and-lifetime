@@ -1,10 +1,12 @@
 
 # Improving electric vehicle mileage and lifetime reinforce lifecycle emission benefits 
-## Overview
+### Overview
 
 This repository contains the code and data processing workflows for "Improving electric vehicle mileage and lifetime reinforce lifecycle emission benefits". The analysis uses the MOT testing data alongside vehicle specifications to analyze the real-world usage patterns, lifespans, and lifecycle greenhouse gas emissions of different vehicle types in Britain's fleet.
 
-## Contents
+---
+
+### Contents
 This repository contains four jupyter notebooks and one python source file, that need to be run in the following order to replicate our results:
 
 ### 1. MOT_data_processing.ipynb
@@ -34,19 +36,27 @@ Lifecycle greenhouse gas emissions calculations that:
 ### MOT_transformer_model_module.py
 Conatains the classes and fucntions used in MOT_transformer_model.ipynb. 
 
-### Data needs to be populated into the respective folders and correctly formatted:
-1. MOT data: Each MOT data year must be added to the correct "Year_Result" folder as a single .csv file. 
-2. EEA data must be added to the eea_data folder
-3. VCA datanmust be added to the vca_data folder
-4. EV Databasae data must be added to the ev_data folder
+---
 
-## Python Environment/Dependencies
+### Data:
+All data used were takne from publicaly availabel sources:
+1. MOT data: Each MOT data year must be added to the correct "{year}_Result" folder as a single "{year}_all_results.csv" file (e.g., data/2021_Result/2021_all_results.csv). 
+2. EEA data must be added to the eea_data folder as "eea_{year}.csv" files.
+3. VCA data must be added to the vca_data folder as "vca_{year}.csv" files.
+4. Survival rate data - VEH1111 from DfT - needs to be added as VEH1111_Summary_Data.csv to the survival_rate_data folder
+5. BEV spec data must be taken from 
+Please note that this data is publically available with their own copyright guidelines where we have given links to the respective websites below.
 
-Please see environment.yml
-
-## Data Sources
+### Data Sources
 MOT test results (2005-2023) https://www.data.gov.uk/dataset/e3939ef8-30c7-4ca8-9c7c-ad9475cc9b2f/anonymised_mot_test
 Vehicle Certification Agency (VCA) https://carfueldata.vehicle-certification-agency.gov.uk/
 European Environment Agency (EEA) https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b
 EV Database  (battery capacity, energy consumption) https://ev-database.org/
 Electricity generation mix data https://doi.org/10.1016/j.enpol.2016.12.037
+VHE1111 DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+
+## Python Environment/Dependencies
+Please see environment.yml
+
+## Contact
+Contact [Daniel Mehlig](mailto:d.mehlig18@imperial.ac.uk) for queries about this repo or for help with setting up the required data. 
