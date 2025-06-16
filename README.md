@@ -39,13 +39,13 @@ Conatains the classes and fucntions used in MOT_transformer_model.ipynb.
 ---
 
 ### Data:
-All data used were takne from publicaly availabel sources:
+All data used were taken from publicly available sources that need to be added to the data folder.
 1. MOT data: Each MOT data year must be added to the correct "{year}_Result" folder as a single "{year}_all_results.csv" file (e.g., data/2021_Result/2021_all_results.csv). 
 2. EEA data must be added to the eea_data folder as "eea_{year}.csv" files.
 3. VCA data must be added to the vca_data folder as "vca_{year}.csv" files.
 4. Survival rate data - VEH1111 from DfT - needs to be added as VEH1111_Summary_Data.csv to the survival_rate_data folder
-5. BEV spec data must be taken from 
-Please note that this data is publically available with their own copyright guidelines where we have given links to the respective websites below.
+5. BEV spec data and BEV vehicle sales data must be added to the ev_data folder
+Please note that this data is publicly available with their own copyright guidelines where we have given links to the respective websites below.
 
 ### Data Sources
 MOT test results (2005-2023) https://www.data.gov.uk/dataset/e3939ef8-30c7-4ca8-9c7c-ad9475cc9b2f/anonymised_mot_test
@@ -54,6 +54,9 @@ European Environment Agency (EEA) https://www.eea.europa.eu/en/datahub/datahubit
 EV Database  (battery capacity, energy consumption) https://ev-database.org/
 Electricity generation mix data https://doi.org/10.1016/j.enpol.2016.12.037
 VHE1111 DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+Global BEV sales from Robbie Andrew - https://robbieandrew.github.io/carsales/
+UK BEV stock and sales - DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+
 
 ## Python Environment/Dependencies
 Please see environment.yml
