@@ -41,10 +41,10 @@ Conatains the classes and fucntions used in MOT_transformer_model.ipynb.
 ### Data:
 All data used were taken from publicly available sources that need to be added to the data folder.
 1. MOT data: Each MOT data year must be added to the correct "{year}_Result" folder as a single "{year}_all_results.csv" file (e.g., data/2021_Result/2021_all_results.csv). 
-2. EEA data must be added to the eea_data folder as "eea_{year}.csv" files.
-3. VCA data must be added to the vca_data folder as "vca_{year}.csv" files.
-4. Survival rate data - VEH1111 from DfT - needs to be added as VEH1111_Summary_Data.csv to the survival_rate_data folder
-5. BEV spec data and BEV vehicle sales data must be added to the ev_data folder
+2. EEA data must be added to the data/eea_data folder as "eea_{year}.csv" files.
+3. VCA data must be added to the data/vca_data folder as "vca_{year}.csv" files.
+4. Survival rate data - VEH1111 from DfT - needs to be added as VEH1111_Summary_Data.csv to the data/survival_rate_data folder
+5. BEV spec data and BEV vehicle sales data must be added to the data/ev_data folder
 Please note that this data is publicly available with their own copyright guidelines where we have given links to the respective websites below.
 
 ### Data Sources
