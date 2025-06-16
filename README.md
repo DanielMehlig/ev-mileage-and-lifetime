@@ -48,14 +48,14 @@ All data used were taken from publicly available sources that need to be added t
 Please note that this data is publicly available with their own copyright guidelines where we have given links to the respective websites below.
 
 ### Data Sources
-MOT test results (2005-2023) https://www.data.gov.uk/dataset/e3939ef8-30c7-4ca8-9c7c-ad9475cc9b2f/anonymised_mot_test
-Vehicle Certification Agency (VCA) https://carfueldata.vehicle-certification-agency.gov.uk/
-European Environment Agency (EEA) https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b
-EV Database  (battery capacity, energy consumption) https://ev-database.org/
-Electricity generation mix data https://doi.org/10.1016/j.enpol.2016.12.037
-VHE1111 DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
-Global BEV sales from Robbie Andrew - https://robbieandrew.github.io/carsales/
-UK BEV stock and sales - DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+- MOT test results (2005-2023) https://www.data.gov.uk/dataset/e3939ef8-30c7-4ca8-9c7c-ad9475cc9b2f/anonymised_mot_test
+- Vehicle Certification Agency (VCA) https://carfueldata.vehicle-certification-agency.gov.uk/
+- European Environment Agency (EEA) https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b
+- EV Database  (battery capacity, energy consumption) https://ev-database.org/
+- Electricity generation mix data https://doi.org/10.1016/j.enpol.2016.12.037
+- VHE1111 DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+- Global BEV sales from Robbie Andrew - https://robbieandrew.github.io/carsales/
+- UK BEV stock and sales - DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
 
 
 ## Python Environment/Dependencies
