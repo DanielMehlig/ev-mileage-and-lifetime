@@ -11,6 +11,8 @@ from typing import List, Tuple
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 from sklearn.metrics import mean_squared_error, roc_auc_score, accuracy_score, r2_score, precision_score, recall_score, f1_score, median_absolute_error
 from tqdm.notebook import tqdm
+
+from typing import List, Tuple
 import gc
 import math
 import matplotlib.pyplot as plt
@@ -80,36 +82,6 @@ class VehicleTransformer(nn.Module):
             nn.Linear(dim_feedforward, 1),  # Output single value
             nn.Sigmoid()
         )
-
-    # def forward(self, src, src_key_padding_mask):
-    #     # Add dimension checks
-    #     batch_size, seq_len, feat_dim = src.shape
-    #     if src_key_padding_mask.shape != (batch_size, seq_len):
-    #         raise ValueError(f"Mask shape {src_key_padding_mask.shape} doesn't match input shape {src.shape}")
-        
-    #     x = self.embedding(src)
-    #     x = self.pos_encoder(x)
-        
-    #     # Invert the mask for transformer (True means ignore)
-    #     transformer_mask = ~src_key_padding_mask.bool()
-        
-    #     output = self.transformer_encoder(
-    #         x,
-    #         src_key_padding_mask=transformer_mask
-    #     )
-        
-    #     # Get the last non-padded element for each sequence
-    #     last_real_idx = (~transformer_mask).sum(dim=1) - 1
-    #     last_hidden = output[torch.arange(batch_size), last_real_idx]
-        
-    #     mileage_pred = self.mileage_head(last_hidden)
-    #     scrapped_pred = self.scrapped_head(last_hidden)
-        
-    #     # Ensure outputs have correct shapes
-    #     mileage_pred = self.mileage_head(last_hidden)  # Shape: [batch_size, 1]
-    #     scrapped_pred = self.scrapped_head(last_hidden)  # Shape: [batch_size, 1]
-        
-    #     return mileage_pred, scrapped_pred
     
     def forward(self, src, src_key_padding_mask):
         # Input validation
@@ -209,7 +181,7 @@ def create_training_sequences(df, scaler, min_sequence_length=3, max_sequence_le
     # Process in batches using groupby
     for _, group in tqdm(df.groupby('vehicle_id'), desc="Creating Sequences"):
         
-        # Only keep at least 4 tests for the minimum sequence length of 3
+        # Only keep at least 4 tests (can't train on 3 tests because we need to predict the next test)
         if len(group) < min_sequence_length + 1:
             continue
             
@@ -386,7 +358,8 @@ def calculate_class_weights(train_loader, device):
         0: 1 / not_scrapped_count,
         1: 1 / scrapped_count
     }
-
+    
+    
     # Normalize weights
     total = sum(weights.values())
     weights = {k: v/total for k, v in weights.items()}
@@ -927,6 +900,7 @@ def analyze_model_predictions(model, test_loader, scaler, device, best_threshold
     print("\nAge distribution of predicted scrapped vehicles:")
     print(pred_scrapped_age_counts)
     
+    
     return {
         'mileage_preds': denorm_preds,
         'mileage_true': denorm_true,
@@ -1003,6 +977,7 @@ def plot_heatmaps_by_age(results, axes, age_bins, cmap):
         # Add single xlabel and ylabel
         if j == 13:
             # Offest to the right between axis 13 and 14:
+            
             ax.text(1, -0.5, 'True Mileage (km)', ha='center', va='center', transform=ax.transAxes)
         if j == 8:
             # Offset upwards between ax 8 and 4
@@ -1019,6 +994,7 @@ def plot_heatmap(results, ax, cmap):
     true_vals = np.array(results['mileage_true'])*1.60934
     pred_vals = np.array(results['mileage_preds'])*1.60934
     
+
     # Create hexbin plot
     hb = ax.hexbin(true_vals, pred_vals, 
                     gridsize=30, cmap=cmap,
@@ -1033,7 +1009,10 @@ def plot_heatmap(results, ax, cmap):
     ax.set_ylim(0, 30_000)
     ax.set_xticklabels(["0", "5k", "10k", "15k", "20k", "25k", "30k"])
     ax.set_yticklabels(["0", "5k", "10k", "15k", "20k", "25k", "30k"])
-
+        
+    # # Add diagonal line
+    # ax.plot([0, 20_000], [0, 20_000], 'r--', alpha=0.5)
+    
     # Add labels
     ax.set_xlabel('True Mileage (km)')
     ax.set_ylabel('Predicted Mileage (km)')
@@ -1049,6 +1028,7 @@ def plot_histograms(results, axes, color_pred, color_true):
     pred_vals = np.array(results['mileage_preds'])*1.60934
     
     # True vales are first ax, predicted values are second
+    
 
     # Create histogram plot between 0 and 30,000 km
     ax = axes[0]
@@ -1076,6 +1056,7 @@ def plot_histograms(results, axes, color_pred, color_true):
     ax.spines['top'].set_visible(False)
     ax.spines['bottom'].set_visible(False)
 
+    
     return axes
 
 # Now construct a function to plot the mean predicted mileage by age and fuel type for the real and predicted values
@@ -1091,6 +1072,7 @@ def plot_mileage(results, axes, color_pred, color_true):
     print(f"Mean predicted mileage: {np.mean(pred_vals):,.0f} km")
     print(f"Unique fuel types: {np.unique(fuel_types)}")
     
+    
     # Create age groups
     age_bins = list(range(4, 31)) + [float('inf')]
     age_labels = [str(i) for i in range(4, 31)] + ['31+']
@@ -1103,6 +1085,7 @@ def plot_mileage(results, axes, color_pred, color_true):
     
     # Get unique fuel types
     unique_fuels = np.unique(fuel_types)
+
     
     for fuel_type, ax in zip(unique_fuels, axes):
         x_true = []
@@ -1214,6 +1197,7 @@ def transformer_figure(results):
     ax3 = fig.add_subplot(gs[6:9, 0:3])
     ax3_top = fig.add_subplot(gs[5:6, 0:3]) # ax3_top
     ax3_right = fig.add_subplot(gs[6:9, 3:4]) # ax3_right
+    
     
     # In the space of gs[5:9, 5:9] add 4x4 plots
     ax4_00 = fig.add_subplot(gs[5:6, 5:6])
