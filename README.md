@@ -1,8 +1,8 @@
 
-# Improving electric vehicle mileage and lifetime reinforce lifecycle emission benefits 
+# Real-world mileage and survival of electric vehicles in Britain and implications for lifecycle emissions
 ### Overview
 
-This repository contains the code and data processing workflows for "Improving electric vehicle mileage and lifetime reinforce lifecycle emission benefits". The analysis uses the MOT testing data alongside vehicle specifications to analyze the real-world usage patterns, lifespans, and lifecycle greenhouse gas emissions of different vehicle types in Britain's fleet.
+This repository contains the code and data processing workflows for "Real-world mileage and survival of electric vehicles in Britain and implications for lifecycle emissions". The analysis uses the MOT testing data alongside vehicle specifications to analyze the real-world usage patterns, lifespans, and lifecycle greenhouse gas emissions of different vehicle types in Britain's fleet.
 
 ---
 
@@ -34,7 +34,7 @@ Lifecycle greenhouse gas emissions calculations that:
 - Produce Figure 4 showing lifecycle CO2e emissions
 
 ### MOT_transformer_model_module.py
-Conatains the classes and fucntions used in MOT_transformer_model.ipynb. 
+Contains the classes and functions used in MOT_transformer_model.ipynb.
 
 ---
 
@@ -43,8 +43,7 @@ All data used were taken from publicly available sources that need to be added t
 1. MOT data: Each MOT data year must be added to the correct "{year}_Result" folder as a single "{year}_all_results.csv" file (e.g., data/2021_Result/2021_all_results.csv). 
 2. EEA data must be added to the data/eea_data folder as "eea_{year}.csv" files.
 3. VCA data must be added to the data/vca_data folder as "vca_{year}.csv" files.
-4. Survival rate data - VEH1111 from DfT - needs to be added as VEH1111_Summary_Data.csv to the data/survival_rate_data folder
-5. BEV spec data and BEV vehicle sales data must be added to the data/ev_data folder
+4. BEV spec data and BEV vehicle sales data must be added to the data/ev_data folder
 Please note that this data is publicly available with their own copyright guidelines where we have given links to the respective websites below.
 
 ### Data Sources
@@ -53,9 +52,9 @@ Please note that this data is publicly available with their own copyright guidel
 - European Environment Agency (EEA) https://www.eea.europa.eu/en/datahub/datahubitem-view/fa8b1229-3db6-495d-b18e-9c9b3267c02b
 - EV Database  (battery capacity, energy consumption) https://ev-database.org/
 - Electricity generation mix data https://doi.org/10.1016/j.enpol.2016.12.037
-- VHE1111 DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+- VEH1111 DfT Vehicle Licensing Statistics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
 - Global BEV sales from Robbie Andrew - https://robbieandrew.github.io/carsales/
-- UK BEV stock and sales - DfT Vehicle Liscensing Statisitics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
+- UK BEV stock and sales - DfT Vehicle Licensing Statistics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
 
 
 ## Python Environment/Dependencies
