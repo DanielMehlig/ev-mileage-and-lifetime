@@ -1,43 +1,15 @@
-# Ignore the input data files 
-# MOT 2005-2024 .csv files and .parquet files
-data/2005_Result/*.csv
-data/2005_Result/*.parquet
-data/2006_Result/*.csv
-data/2006_Result/*.parquet
-data/2007_Result/*.csv
-data/2007_Result/*.parquet
-data/2008_Result/*.csv
-data/2008_Result/*.parquet
-data/2009_Result/*.csv
-data/2009_Result/*.parquet
-data/2010_Result/*.csv
-data/2010_Result/*.parquet
-data/2011_Result/*.csv
-data/2011_Result/*.parquet
-data/2012_Result/*.csv
-data/2012_Result/*.parquet
-data/2013_Result/*.csv
-data/2013_Result/*.parquet
-data/2014_Result/*.csv
-data/2014_Result/*.parquet
-data/2015_Result/*.csv
-data/2015_Result/*.parquet
-data/2016_Result/*.csv
-data/2016_Result/*.parquet
-data/2017_Result/*.csv
-data/2017_Result/*.parquet
-data/2018_Result/*.csv
-data/2018_Result/*.parquet
-data/2019_Result/*.csv
-data/2019_Result/*.parquet
-data/2020_Result/*.csv
-data/2020_Result/*.parquet
-data/2021_Result/*.csv
-data/2021_Result/*.parquet
-data/2022_Result/*.csv
-data/2022_Result/*.parquet
-data/2023_Result/*.csv
-data/2023_Result/*.parquet
-data/2024_Result/*.csv
-data/2024_Result/*.parquet
+# Ignore all files under data while preserving directory structure
+data/**
+!data/**/
 
+# Ignore the results directory
+results/**
+
+# Ignore the models
+models/**
+
+# Ignore MOT reference docs (documentation from the website)
+reference_docs/**
+
+# Ignore .vscode
+.vscode/**

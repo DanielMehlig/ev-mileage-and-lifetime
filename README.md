@@ -39,12 +39,12 @@ Contains the classes and functions used in MOT_transformer_model.ipynb.
 ---
 
 ### Data:
-All data used were taken from publicly available sources that need to be added to the data folder.
+All data used were taken from publicly available sources:
 1. MOT data: Each MOT data year must be added to the correct "{year}_Result" folder as a single "{year}_all_results.csv" file (e.g., data/2021_Result/2021_all_results.csv). 
 2. EEA data must be added to the data/eea_data folder as "eea_{year}.csv" files.
 3. VCA data must be added to the data/vca_data folder as "vca_{year}.csv" files.
 4. BEV spec data and BEV vehicle sales data must be added to the data/ev_data folder
-Please note that this data is publicly available with their own copyright guidelines where we have given links to the respective websites below.
+The data folder is available via the Data Availability Statement in the paper. Please contact the corresponding author for access to the data folder.
 
 ### Data Sources
 - MOT test results (2005-2023) https://www.data.gov.uk/dataset/e3939ef8-30c7-4ca8-9c7c-ad9475cc9b2f/anonymised_mot_test
@@ -56,9 +56,11 @@ Please note that this data is publicly available with their own copyright guidel
 - Global BEV sales from Robbie Andrew - https://robbieandrew.github.io/carsales/
 - UK BEV stock and sales - DfT Vehicle Licensing Statistics https://www.gov.uk/government/statistical-data-sets/vehicle-licensing-statistics-data-tables
 
+### Results 
+Results and Source Data behind each figure are provided in the results folder. The results folder is available via the Data Availability Statement in the paper. Please contact the corresponding author for access to the results folder.
 
 ## Python Environment/Dependencies
 Please see environment.yml
 
 ## Contact
-Contact [Daniel Mehlig](mailto:d.mehlig18@imperial.ac.uk) for queries about this repo or for help with setting up the required data. 
+Contact [Daniel Mehlig](mailto:d.mehlig18@imperial.ac.uk) for queries about this repo or the article.
