@@ -44,6 +44,8 @@ All data used were taken from publicly available sources:
 2. EEA data must be added to the data/eea_data folder as "eea_{year}.csv" files.
 3. VCA data must be added to the data/vca_data folder as "vca_{year}.csv" files.
 4. BEV spec data and BEV vehicle sales data must be added to the data/ev_data folder
+
+
 The data folder is available via the Data Availability Statement in the paper. Please contact the corresponding author for access to the data folder.
 
 ### Data Sources
