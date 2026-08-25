@@ -1280,8 +1280,12 @@ def prepare_prediction_data(df, label_encoders, scaler, max_seq_length=8):
     new_n = df_processed["vehicle_id"].nunique()
     print(f"Dropped {n - new_n} vehicles with NaN values.")
     
-    # Get last tests before preprocessing for later use
-    last_tests = df.sort_values('test_year').groupby('vehicle_id').last().reset_index()
+    # Keep the last available row per vehicle for vectorized prediction assembly.
+    last_tests = (
+        df.groupby('vehicle_id', sort=False)
+        .tail(1)
+        .set_index('vehicle_id', drop=False)
+    )
     
     # Encode categorical variables
     for col in categorical_cols:
@@ -1308,7 +1312,7 @@ def prepare_prediction_data(df, label_encoders, scaler, max_seq_length=8):
     
     return sequences, vehicle_ids, last_tests
 
-def generate_predictions(model, data, label_encoders, scaler, device, batch_size=25_000, threshold=0.5):
+def generate_predictions(model, data, label_encoders, scaler, device, batch_size=25_000, threshold=0.5, num_workers=0):
     """Generate predictions for the next test for each vehicle"""
     print("Starting prediction generation...")
     model.eval()
@@ -1323,52 +1327,45 @@ def generate_predictions(model, data, label_encoders, scaler, device, batch_size
         batch_size=batch_size,
         shuffle=False,
         collate_fn=collate_pred_batch,
-        num_workers=4,
-        pin_memory=True
+        num_workers=num_workers,
+        pin_memory=(device.type == 'cuda')
     )
     
     # Generate predictions
     print("Generating predictions...")
     all_predictions = []
     
-    with torch.no_grad():
+    with torch.inference_mode():
         for batch_sequences, batch_masks, batch_vehicle_ids in tqdm(dataloader, desc="Processing batches"):
             # Move to device
-            batch_sequences = batch_sequences.to(device)
-            batch_masks = batch_masks.to(device)
+            batch_sequences = batch_sequences.to(device, non_blocking=(device.type == 'cuda'))
+            batch_masks = batch_masks.to(device, non_blocking=(device.type == 'cuda'))
             
             # Get predictions
             mileage_preds, scrapped_preds = model(batch_sequences, batch_masks)
             
             # Move to CPU and convert to numpy
-            mileage_preds = mileage_preds.cpu().numpy()
-            scrapped_preds = scrapped_preds.cpu().numpy()
+            mileage_preds = mileage_preds.cpu().numpy().reshape(-1)
+            scrapped_preds = scrapped_preds.cpu().numpy().reshape(-1)
             
             # Denormalize mileage predictions
             mileage_preds = mileage_preds * scaler.scale_[0] + scaler.mean_[0]
             
-            # Create predictions for this batch
-            for idx, vehicle_id in enumerate(batch_vehicle_ids):
-                last_test = last_tests[last_tests['vehicle_id'] == vehicle_id].iloc[0]
-                
-                new_row = last_test.copy()
-                new_row['scrap_probability'] = scrapped_preds[idx][0]
-                new_row['last_test'] = bool(scrapped_preds[idx][0] > threshold)
-                new_row['mileage_per_year'] = mileage_preds[idx][0]
-                new_row['test_mileage'] = last_test['test_mileage'] + mileage_preds[idx][0]
-                new_row['age_year'] = last_test['age_year'] + 1
-                new_row['time_between_tests'] = 1.0
-                new_row['test_year'] = new_row['test_year'] + 1
-                new_row['simulated_data'] = True
-                
-                all_predictions.append(new_row)
-                
-            if device.type == 'cuda':
-                torch.cuda.empty_cache()
+            batch_last_tests = last_tests.loc[list(batch_vehicle_ids)].copy()
+            batch_last_tests['scrap_probability'] = scrapped_preds
+            batch_last_tests['last_test'] = scrapped_preds > threshold
+            batch_last_tests['mileage_per_year'] = mileage_preds
+            batch_last_tests['test_mileage'] = batch_last_tests['test_mileage'].to_numpy() + mileage_preds
+            batch_last_tests['age_year'] = batch_last_tests['age_year'].to_numpy() + 1
+            batch_last_tests['time_between_tests'] = 1.0
+            batch_last_tests['test_year'] = batch_last_tests['test_year'].to_numpy() + 1
+            batch_last_tests['simulated_data'] = True
+
+            all_predictions.append(batch_last_tests.reset_index(drop=True))
         
     # Create predictions DataFrame
     print("Creating final DataFrame...")
-    pred_df = pd.DataFrame(all_predictions)
+    pred_df = pd.concat(all_predictions, ignore_index=True)
     
     return pred_df            
 
